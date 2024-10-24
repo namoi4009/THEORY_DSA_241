@@ -72,25 +72,22 @@ public:
     int length() const { return top; } // Return length
 };
 
-bool parentheses(const string &L)
-{
+bool parentheses(const string &L) {
     /* To do */
-    AStack<char> open;
-    for (unsigned int i = 0; i < L.length(); i++)
-    {
-        if (L[i] == '(')
-        {
-            open.push(L[i]);
-        }
-        if (L[i] == ')')
-        {
-            if (open.length() == 0)
+    Stack<char>* open = new AStack<char>();
+    for (int i = 0; i < (int)L.length(); i++) {
+        if (L[i] == '(') {
+            open->push(L[i]);
+        } else if (L[i] == ')') {
+            if (open->length() == 0) {
+                delete open;
                 return false;
-            else
-                open.pop();
+            } else open->pop();
         }
     }
-    return open.length() == 0;
+    bool res = open->length() == 0;
+    delete open;
+    return res;
 }
 
 // bool isBalancedHelper(const std::string &str, unsigned int index, int balance)
@@ -135,6 +132,6 @@ bool recursiveParentheses(const string &L)
 int main()
 {
     string z = "((())())()";
-    cout << recursiveParentheses(z) << endl;
+    cout << parentheses(z) << endl;
     return 0;
 }
